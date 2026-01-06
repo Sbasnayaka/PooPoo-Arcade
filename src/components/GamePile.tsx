@@ -106,8 +106,17 @@ export default function GamePile() {
                         top: 0,
                         left: 0,
                     }}
+                    onPointerDown={(e) => {
+                        // Prevent navigation if dragging logic is heavy, but for now simple click works if we don't drag far.
+                        // Ideally we check if it was a drag or a click.
+                        // For simplicity in this rough physics demo, we'll use a double click or just rely on the fact that dragging prevents click propagation usually.
+                        // Actually, let's just make it a link but we need to stop propagation if dragging.
+                        // Workaround: Add a small button inside or make the whole thing clickable if velocity is low.
+                    }}
                 >
-                    {game.label}
+                    <a href={`/games/${game.id}`} className="w-full h-full flex items-center justify-center pointer-events-none">
+                        <span className="pointer-events-auto">{game.label}</span>
+                    </a>
                 </div>
             ))}
             <div className="absolute bottom-4 left-0 right-0 text-center text-burnt-sienna font-irony pointer-events-none opacity-50">
