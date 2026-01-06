@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root {
+  --color-septic: #3E1C00;
+  --color-cardboard: #D8B370;
+  --color-sewage: #7C3F00;
+  --color-bile: #CCFF00;
+  --color-fawn: #E6D1AB;
+  --color-burnt-sienna: #E97451;
+  
+  --chaos-rotation: 1.2deg;
+  --chaos-skew: -0.5deg;
+  --liquid-viscosity: 0.8;
+
+  --background: var(--color-septic);
+  --foreground: var(--color-fawn);
+
+  /* Fonts declared in layout */
+}
+
+@theme inline {
+  --color-septic: var(--color-septic);
+  --color-cardboard: var(--color-cardboard);
+  --color-sewage: var(--color-sewage);
+  --color-bile: var(--color-bile);
+  --color-fawn: var(--color-fawn);
+  --color-burnt-sienna: var(--color-burnt-sienna);
+  
+  --font-display: var(--font-mupen);
+  --font-body: var(--font-vcr);
+  --font-irony: var(--font-comic);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), monospace;
+  overflow-x: hidden; /* For chaos rotations */
+}
