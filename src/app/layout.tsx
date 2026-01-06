@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fredoka, Courier_Prime } from "next/font/google";
 import "./globals.css";
+import PhysicsProvider from "@/components/PhysicsProvider";
 
 const mupen = Fredoka({
   variable: "--font-mupen",
@@ -28,11 +29,13 @@ export default function RootLayout({
       <body
         className={`${mupen.variable} ${vcr.variable} antialiased`}
         style={{
-            // @ts-ignore
-            "--font-comic": '"Comic Sans MS", "Comic Sans", cursive'
+          // @ts-ignore
+          "--font-comic": '"Comic Sans MS", "Comic Sans", cursive'
         } as React.CSSProperties}
       >
-        {children}
+        <PhysicsProvider>
+          {children}
+        </PhysicsProvider>
       </body>
     </html>
   );
