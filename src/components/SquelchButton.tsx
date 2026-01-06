@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { useAudio } from '@/hooks/useAudio'
 
 interface SquelchButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'secondary'
@@ -9,11 +10,13 @@ interface SquelchButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 export default function SquelchButton({ children, className, variant = 'primary', ...props }: SquelchButtonProps) {
     const [scale, setScale] = useState({ x: 1, y: 1 })
+    // @ts-ignore
+    const { playSquelch } = useAudio()
 
     const handleMouseDown = () => {
         // Squelch effect: flatten y, expand x
         setScale({ x: 1.1, y: 0.9 })
-        // TODO: Play squelch sound
+        if (playSquelch) playSquelch()
     }
 
     const handleMouseUp = () => {

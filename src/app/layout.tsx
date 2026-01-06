@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Fredoka, Courier_Prime } from "next/font/google";
 import "./globals.css";
 import PhysicsProvider from "@/components/PhysicsProvider";
+import StinkCursor from "@/components/effects/StinkCursor";
+import BoredomDetector from "@/components/effects/BoredomDetector";
+import FlushTransition from "@/components/effects/FlushTransition";
 
 const mupen = Fredoka({
   variable: "--font-mupen",
@@ -34,7 +37,11 @@ export default function RootLayout({
         } as React.CSSProperties}
       >
         <PhysicsProvider>
-          {children}
+          <StinkCursor />
+          <BoredomDetector />
+          <FlushTransition>
+            {children}
+          </FlushTransition>
         </PhysicsProvider>
       </body>
     </html>

@@ -1,5 +1,9 @@
-import TicTacTurd from '@/components/games/TicTacTurd';
-import Battleflush from '@/components/games/Battleflush';
+import dynamic from 'next/dynamic';
+
+const TicTacTurd = dynamic(() => import('@/components/games/TicTacTurd'), { ssr: false });
+const Battleflush = dynamic(() => import('@/components/games/Battleflush'), { ssr: false });
+
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
     return [
@@ -11,8 +15,7 @@ export async function generateStaticParams() {
 export default async function GamePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
 
-    // Simple random room for demo, or read from searchParams if we were using client component with useSearchParams
-    // For this static/server hybrid, we'll just pass a static demo room + id
+    // Simple random room for demo
     const roomId = `room-${id}-demo`;
 
     return (
@@ -26,7 +29,7 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
             {id === 'tictacturd' && <TicTacTurd roomId={roomId} />}
             {id === 'battleflush' && <Battleflush roomId={roomId} />}
 
-            <a href="/" className="mt-12 text-burnt-sienna font-irony underline hover:no-underline">
+            <a href="/" className="mt-12 text-burnt-sienna font-irony underline hover:no-underline z-10">
                 &larr; Back to the Pile
             </a>
         </main>

@@ -13,7 +13,9 @@ export default function Container({ children, className, noRotation }: Container
 
     useEffect(() => {
         if (!noRotation) {
-            setRotation(Math.random() * 4 - 2)
+            // Chaos theory: -2 to +2 deg
+            const rot = Math.random() * 4 - 2;
+            setRotation(rot);
         }
     }, [noRotation])
 
