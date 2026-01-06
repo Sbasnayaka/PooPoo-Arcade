@@ -1,7 +1,4 @@
-import dynamic from 'next/dynamic';
-
-const TicTacTurd = dynamic(() => import('@/components/games/TicTacTurd'), { ssr: false });
-const Battleflush = dynamic(() => import('@/components/games/Battleflush'), { ssr: false });
+import GameWrapper from '@/components/GameWrapper';
 
 export const dynamicParams = true;
 
@@ -26,8 +23,7 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
 
             <div className="bg-pattern-dots bg-repeat opacity-20 absolute inset-0 pointer-events-none"></div>
 
-            {id === 'tictacturd' && <TicTacTurd roomId={roomId} />}
-            {id === 'battleflush' && <Battleflush roomId={roomId} />}
+            <GameWrapper id={id} roomId={roomId} />
 
             <a href="/" className="mt-12 text-burnt-sienna font-irony underline hover:no-underline z-10">
                 &larr; Back to the Pile
