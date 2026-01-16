@@ -141,6 +141,12 @@ function mockPairing(myCode: string, partnerCode: string): PairingResult {
 
     localStorage.setItem('mockPairing', JSON.stringify(mockPairingData));
 
+    console.log('📝 Mock pairing initiated:', mockPairingData);
+    console.log('💡 Tip: Open another browser window to test the partner redirect');
+    console.log(`   1. Copy partner code: ${partnerCode}`);
+    console.log(`   2. Open http://localhost:3001 in a new window`);
+    console.log(`   3. The partner should auto-redirect to lobby`);
+
     return { success: true, lobbyId };
 }
 

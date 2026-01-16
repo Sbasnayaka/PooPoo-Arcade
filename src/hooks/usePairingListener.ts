@@ -70,24 +70,35 @@ function setupMockListener(userCode: string, router: any): NodeJS.Timeout {
 
                 // Check if this user is the partner being paired with
                 if (pairing.partnerCode === userCode) {
-                    console.log('🔔 Mock pairing detected:', pairing);
+                    console.log('🔔 Mock pairing detected - you are the partner!', pairing);
 
                     // Store lobby info
                     localStorage.setItem('currentLobby', pairing.lobbyId);
                     localStorage.setItem('partnerCode', pairing.myCode);
 
-                    // Clear the mock pairing event
+                    // Clear the mock pairing event ONLY after partner has read it
                     localStorage.removeItem('mockPairing');
 
                     // Redirect to lobby
                     router.push(`/lobby/${pairing.lobbyId}`);
+                }
+                // If this user is the initiator (myCode matches), don't clear the data yet
+                // The partner needs time to read it
+                else if (pairing.myCode === userCode) {
+                    console.log('⏳ Waiting for partner to join...', pairing);
+                    // Optional: Set a timeout to clear old pairing data after 10 seconds
+                    const pairingAge = Date.now() - (pairing.timestamp || 0);
+                    if (pairingAge > 10000) {
+                        console.log('⚠️ Pairing data expired, clearing...');
+                        localStorage.removeItem('mockPairing');
+                    }
                 }
             } catch (error) {
                 console.error('Error parsing mock pairing:', error);
                 localStorage.removeItem('mockPairing');
             }
         }
-    }, 1000); // Poll every second
+    }, 500); // Poll every 500ms for faster detection
 }
 
 /**

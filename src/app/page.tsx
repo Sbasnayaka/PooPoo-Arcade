@@ -15,9 +15,17 @@ export default function Home() {
   const [partnerCode, setPartnerCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [mounted, setMounted] = useState(false);
+
+  // Handle mounting to prevent hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Generate user code on mount
   useEffect(() => {
+    if (!mounted) return;
+
     // Check if user already has a code in localStorage
     const existingCode = localStorage.getItem('userCode');
     const codeTimestamp = localStorage.getItem('userCodeTimestamp');
@@ -37,7 +45,7 @@ export default function Home() {
     setUserCode(newCode);
     localStorage.setItem('userCode', newCode);
     localStorage.setItem('userCodeTimestamp', Date.now().toString());
-  }, []);
+  }, [mounted]);
 
   // Listen for pairing notifications from partner
   usePairingListener(userCode);
