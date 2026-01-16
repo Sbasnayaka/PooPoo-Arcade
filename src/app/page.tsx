@@ -1,10 +1,46 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { generateUserCode, formatCode } from '@/utils/codeGenerator';
+import { initiatePartnerPairing } from '@/services/pairingService';
+import { usePairingListener } from '@/hooks/usePairingListener';
 
 export default function Home() {
+  const router = useRouter();
+
+  // State management
   const [copied, setCopied] = useState(false);
-  const userCode = "XST-2S5-SR5";
+  const [userCode, setUserCode] = useState<string>('');
+  const [partnerCode, setPartnerCode] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // Generate user code on mount
+  useEffect(() => {
+    // Check if user already has a code in localStorage
+    const existingCode = localStorage.getItem('userCode');
+    const codeTimestamp = localStorage.getItem('userCodeTimestamp');
+    const oneHour = 60 * 60 * 1000;
+
+    // Reuse existing code if it's less than 1 hour old
+    if (existingCode && codeTimestamp) {
+      const age = Date.now() - parseInt(codeTimestamp);
+      if (age < oneHour) {
+        setUserCode(existingCode);
+        return;
+      }
+    }
+
+    // Generate new code
+    const newCode = generateUserCode();
+    setUserCode(newCode);
+    localStorage.setItem('userCode', newCode);
+    localStorage.setItem('userCodeTimestamp', Date.now().toString());
+  }, []);
+
+  // Listen for pairing notifications from partner
+  usePairingListener(userCode);
 
   const handleCopyCode = async () => {
     try {
@@ -13,6 +49,45 @@ export default function Home() {
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy:', err);
+    }
+  };
+
+  const handleFlushClick = async () => {
+    // Validate partner code input
+    if (!partnerCode.trim()) {
+      setError('Please enter a partner code');
+      return;
+    }
+
+    // Format and validate partner code
+    const formattedCode = formatCode(partnerCode);
+    if (!formattedCode) {
+      setError('Invalid code format. Use format: XXX-XXX-XXX');
+      return;
+    }
+
+    // Check for self-pairing
+    if (formattedCode === userCode) {
+      setError('You cannot pair with yourself!');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    // Initiate pairing
+    const result = await initiatePartnerPairing(userCode, formattedCode);
+
+    if (result.success) {
+      // Store lobby info
+      localStorage.setItem('currentLobby', result.lobbyId!);
+      localStorage.setItem('partnerCode', formattedCode);
+
+      // Redirect to lobby
+      router.push(`/lobby/${result.lobbyId}`);
+    } else {
+      setError(result.error || 'Pairing failed');
+      setLoading(false);
     }
   };
   return (
@@ -43,8 +118,14 @@ export default function Home() {
               <input
                 id="partner-code"
                 type="text"
-                className="w-full px-4 py-3 border-4 border-black font-body text-lg bg-cream text-deep-brown focus:outline-none focus:ring-4 focus:ring-warm-tan shadow-[4px_4px_0px_#000]"
+                value={partnerCode}
+                onChange={(e) => {
+                  setPartnerCode(e.target.value.toUpperCase());
+                  setError(''); // Clear error on input
+                }}
                 placeholder="Enter partner code"
+                className="w-full px-4 py-3 border-4 border-black font-body text-lg bg-cream text-deep-brown focus:outline-none focus:ring-4 focus:ring-warm-tan shadow-[4px_4px_0px_#000]"
+                disabled={loading}
               />
             </div>
 
@@ -96,14 +177,16 @@ export default function Home() {
 
         {/* Flush Button - Log Shaped */}
         <button
-          className="mt-8 w-full bg-bronze text-cream font-display text-2xl py-4 px-8 border-4 border-black shadow-[8px_8px_0px_#000] hover:bg-rust transition-colors active:shadow-[4px_4px_0px_#000] active:translate-x-[4px] active:translate-y-[4px] rounded-full relative overflow-hidden"
+          onClick={handleFlushClick}
+          disabled={loading || !userCode || !partnerCode}
+          className="mt-8 w-full bg-bronze text-cream font-display text-2xl py-4 px-8 border-4 border-black shadow-[8px_8px_0px_#000] hover:bg-rust transition-colors active:shadow-[4px_4px_0px_#000] active:translate-x-[4px] active:translate-y-[4px] rounded-full relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
           style={{
             borderRadius: '50px / 35px',
             background: 'linear-gradient(135deg, #765341 0%, #6a4a3a 50%, #5b3e31 100%)'
           }}
         >
           <span className="relative z-10 drop-shadow-[2px_2px_4px_rgba(0,0,0,0.5)]">
-            🪵 FLUSH 🪵
+            {loading ? '⏳ FLUSHING...' : '🪵 FLUSH 🪵'}
           </span>
           {/* Wood grain texture effect */}
           <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -112,6 +195,13 @@ export default function Home() {
             }}></div>
           </div>
         </button>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mt-4 p-4 bg-rust border-4 border-black shadow-[4px_4px_0px_#000] rotate-[-0.5deg]">
+            <p className="text-cream font-body text-center">⚠️ {error}</p>
+          </div>
+        )}
 
         {/* Footer Text */}
         <p className="text-center text-rust font-irony mt-8 text-sm animate-pulse">
