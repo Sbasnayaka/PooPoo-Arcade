@@ -22,7 +22,7 @@ export default function Container({ children, className, noRotation }: Container
     return (
         <div
             className={twMerge(
-                "bg-cardboard border-4 border-black shadow-[8px_8px_0px_#000] p-6 text-septic transition-transform duration-300 hover:scale-[1.02]",
+                "bg-sand border-4 border-black shadow-[8px_8px_0px_#000] p-6 text-deep-brown transition-transform duration-300 hover:scale-[1.02]",
                 className
             )}
             style={{

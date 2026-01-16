@@ -1,30 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --color-septic: #3E1C00;
-  --color-cardboard: #D8B370;
-  --color-sewage: #7C3F00;
-  --color-bile: #CCFF00;
-  --color-fawn: #E6D1AB;
-  --color-burnt-sienna: #E97451;
+  /* Primary brown/tan palette */
+  --color-deep-brown: #3d251e;
+  --color-dark-cocoa: #4c3228;
+  --color-earth: #5b3e31;
+  --color-mid-brown: #6a4a3a;
+  --color-bronze: #765341;
+  --color-rust: #8b6c5c;
+  --color-warm-tan: #a08679;
+  --color-sand: #bca89f;
+  --color-cream: #d8cbc4;
   
   --chaos-rotation: 1.2deg;
   --chaos-skew: -0.5deg;
   --liquid-viscosity: 0.8;
 
-  --background: var(--color-septic);
-  --foreground: var(--color-fawn);
+  --background: var(--color-deep-brown);
+  --foreground: var(--color-cream);
 
   /* Fonts declared in layout */
 }
 
 @theme inline {
-  --color-septic: var(--color-septic);
-  --color-cardboard: var(--color-cardboard);
-  --color-sewage: var(--color-sewage);
-  --color-bile: var(--color-bile);
-  --color-fawn: var(--color-fawn);
-  --color-burnt-sienna: var(--color-burnt-sienna);
+  --color-deep-brown: var(--color-deep-brown);
+  --color-dark-cocoa: var(--color-dark-cocoa);
+  --color-earth: var(--color-earth);
+  --color-mid-brown: var(--color-mid-brown);
+  --color-bronze: var(--color-bronze);
+  --color-rust: var(--color-rust);
+  --color-warm-tan: var(--color-warm-tan);
+  --color-sand: var(--color-sand);
+  --color-cream: var(--color-cream);
   
   --font-display: var(--font-mupen);
   --font-body: var(--font-vcr);

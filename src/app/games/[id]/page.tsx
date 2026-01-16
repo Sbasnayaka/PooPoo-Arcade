@@ -16,8 +16,8 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
     const roomId = `room-${id}-demo`;
 
     return (
-        <main className="min-h-screen bg-septic flex flex-col items-center justify-center p-8">
-            <h1 className="text-4xl text-bile font-display mb-8 drop-shadow-[4px_4px_0px_#000] rotate-1">
+        <main className="min-h-screen bg-deep-brown flex flex-col items-center justify-center p-8">
+            <h1 className="text-4xl text-warm-tan font-display mb-8 drop-shadow-[4px_4px_0px_#000] rotate-1">
                 {id.toUpperCase()} AREA
             </h1>
 
@@ -25,7 +25,7 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
 
             <GameWrapper id={id} roomId={roomId} />
 
-            <a href="/" className="mt-12 text-burnt-sienna font-irony underline hover:no-underline z-10">
+            <a href="/" className="mt-12 text-rust font-irony underline hover:no-underline z-10">
                 &larr; Back to the Pile
             </a>
         </main>

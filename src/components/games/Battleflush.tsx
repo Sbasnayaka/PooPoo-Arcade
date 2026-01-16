@@ -18,7 +18,7 @@ export default function Battleflush({ roomId }: { roomId: string }) {
     }
 
     return (
-        <div className="flex flex-col items-center gap-4 p-6 bg-septic border-4 border-cardboard text-fawn">
+        <div className="flex flex-col items-center gap-4 p-6 bg-deep-brown border-4 border-sand text-cream">
             <h2 className="text-2xl font-display">Battleflush (WIP)</h2>
             <p className="font-irony text-sm">Click to hide your logs.</p>
 
@@ -27,13 +27,13 @@ export default function Battleflush({ roomId }: { roomId: string }) {
                     <div
                         key={i}
                         onClick={() => handleClick(i)}
-                        className={`w-12 h-12 border border-cardboard flex items-center justify-center cursor-pointer ${cell === 1 ? 'bg-sewage' : 'bg-blue-900'}`}
+                        className={`w-12 h-12 border border-sand flex items-center justify-center cursor-pointer ${cell === 1 ? 'bg-mid-brown' : 'bg-blue-900'}`}
                     >
                         {cell === 1 ? '🪵' : ''}
                     </div>
                 ))}
             </div>
-            <div className="text-xs text-bile">{isConnected ? 'Connected to Sewer' : 'Offline'}</div>
+            <div className="text-xs text-warm-tan">{isConnected ? 'Connected to Sewer' : 'Offline'}</div>
         </div>
     )
 }

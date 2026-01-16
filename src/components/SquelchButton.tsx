@@ -27,8 +27,8 @@ export default function SquelchButton({ children, className, variant = 'primary'
 
     const baseStyles = "font-display text-xl border-4 border-black shadow-[6px_6px_0px_#000] transition-transform duration-100 flex items-center justify-center px-6 py-3 cursor-pointer select-none"
     const variants = {
-        primary: "bg-sewage text-fawn hover:bg-opacity-90",
-        secondary: "bg-cardboard text-septic hover:bg-opacity-90"
+        primary: "bg-mid-brown text-cream hover:bg-opacity-90",
+        secondary: "bg-sand text-deep-brown hover:bg-opacity-90"
     }
 
     return (

@@ -15,12 +15,12 @@ export default function GamePile() {
     // Spawn bodies invisible, and map DOM elements to them.
 
     const [games] = useState([
-        { id: 'tictacturd', color: '#D8B370', label: 'Tic Tac Turd' },
-        { id: 'battleflush', color: '#7C3F00', label: 'Battleflush' },
-        { id: 'blockpoop', color: '#CCFF00', label: 'Coming Soon' },
+        { id: 'tictacturd', color: '#bca89f', label: 'Tic Tac Turd' },
+        { id: 'battleflush', color: '#6a4a3a', label: 'Battleflush' },
+        { id: 'blockpoop', color: '#a08679', label: 'Coming Soon' },
         // Duplicate for pile effect
-        { id: 'p1', color: '#D8B370', label: 'Pile Item 1' },
-        { id: 'p2', color: '#7C3F00', label: 'Pile Item 2' },
+        { id: 'p1', color: '#8b6c5c', label: 'Pile Item 1' },
+        { id: 'p2', color: '#765341', label: 'Pile Item 2' },
     ])
 
     const bodiesRef = useRef<Map<string, Matter.Body>>(new Map())
@@ -101,7 +101,7 @@ export default function GamePile() {
                     className="absolute w-40 h-24 flex items-center justify-center border-4 border-black text-center font-display text-sm p-2 shadow-[4px_4px_0px_#000] cursor-grab active:cursor-grabbing select-none hover:brightness-110"
                     style={{
                         backgroundColor: game.color,
-                        color: game.color === '#7C3F00' ? '#E6D1AB' : '#3E1C00',
+                        color: game.color === '#6a4a3a' ? '#d8cbc4' : '#3d251e',
                         willChange: 'transform',
                         top: 0,
                         left: 0,
@@ -119,7 +119,7 @@ export default function GamePile() {
                     </a>
                 </div>
             ))}
-            <div className="absolute bottom-4 left-0 right-0 text-center text-burnt-sienna font-irony pointer-events-none opacity-50">
+            <div className="absolute bottom-4 left-0 right-0 text-center text-rust font-irony pointer-events-none opacity-50">
                 Drag to dig...
             </div>
         </div>

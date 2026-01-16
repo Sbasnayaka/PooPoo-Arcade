@@ -50,14 +50,14 @@ export default function TicTacTurd({ roomId }: { roomId: string }) {
     const status = winner ? `Winner: ${winner}` : `Next player: ${isMyTurn ? 'You (💩)' : 'Them (🧻)'}`
 
     return (
-        <div className="flex flex-col items-center gap-6 bg-cardboard p-8 border-4 border-black shadow-[8px_8px_0px_#000] rotate-1">
-            <h2 className="text-3xl font-display text-septic">{isConnected ? 'LIVE' : 'Connecting...'} Status: {status}</h2>
+        <div className="flex flex-col items-center gap-6 bg-sand p-8 border-4 border-black shadow-[8px_8px_0px_#000] rotate-1">
+            <h2 className="text-3xl font-display text-deep-brown">{isConnected ? 'LIVE' : 'Connecting...'} Status: {status}</h2>
 
-            <div className="grid grid-cols-3 gap-0 border-4 border-black bg-septic">
+            <div className="grid grid-cols-3 gap-0 border-4 border-black bg-deep-brown">
                 {board.map((square, i) => (
                     <button
                         key={i}
-                        className="w-24 h-24 border-2 border-black flex items-center justify-center text-5xl bg-fawn hover:bg-cardboard focus:outline-none"
+                        className="w-24 h-24 border-2 border-black flex items-center justify-center text-5xl bg-cream hover:bg-sand focus:outline-none"
                         onClick={() => handleClick(i)}
                     >
                         {square}

@@ -31,7 +31,7 @@ export default function StinkCursor() {
             }}
         >
             <div className="text-2xl animate-pulse">🪰</div>
-            <div className="absolute top-0 left-0 w-full h-full animate-ping text-bile opacity-50 text-xs">
+            <div className="absolute top-0 left-0 w-full h-full animate-ping text-warm-tan opacity-50 text-xs">
                 sss
             </div>
         </div>
